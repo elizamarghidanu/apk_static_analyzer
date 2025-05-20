@@ -89,15 +89,69 @@ The application will:
   - Implement PDF report export with WeasyPrint
   - Final testing and deploy MVP
 
-## 8. Future Work
+## 8. Setup & Usage
 
-- Support dynamic analysis using emulators
-- Build SDK reputation database for more detailed tracker detection
-- Add REST API for CI/CD integration
-- Extend risk model with machine learning
-- Create admin dashboard for analysis trends and insights
+### 1. Clone the repo
+```bash
+git clone https://github.com/yourusername/apk-static-analyzer.git
+cd apk-static-analyzer
+```
 
-## 9. Use Cases
+### 2. Create virtual environment
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
+
+### 3. Install dependencies
+```bash
+pip install -r requirements.txt
+```
+
+### 4. Set your VirusTotal API key (optional but recommended)
+```bash
+export VIRUSTOTAL_API_KEY=your_actual_key
+```
+
+### 5. Run the app
+```bash
+flask run
+```
+
+Then open [http://127.0.0.1:5000](http://127.0.0.1:5000) in your browser.
+
+---
+
+## 9. How to Use
+
+1. Visit the homepage
+2. Upload an `.apk` file
+3. The app will:
+   - Parse and analyze the APK
+   - Query VirusTotal (if API key is set)
+   - Display a summary on screen
+   - Generate a downloadable PDF report
+
+---
+
+## 10. Folder Structure
+```
+├── app/
+│   ├── __init__.py
+│   ├── routes.py
+│   ├── templates/
+│   │   ├── upload.html
+│   │   └── report_template.html
+├── uploads/               # Uploaded APKs
+├── decoded/               # Decoded APK contents
+├── reports/               # Generated PDF reports
+├── run.py                 # Entry point
+├── requirements.txt
+├── render.yaml (optional)
+```
+
+
+## 11. Use Cases
 
 - **Security Researchers** auditing APKs for vulnerabilities
 - **Developers** testing builds before publishing on Google Play
