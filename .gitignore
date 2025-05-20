@@ -1,1 +1,21 @@
 __pycache__/\n*.pyc\n*.log
+
+# Ignore APKs and decoded folders
+*.apk
+*_decoded/
+uploads/
+reports/
+__pycache__/
+*.pdf
+
+# Virtual environment
+venv/
+
+# Py cache and temp
+*.pyc
+*.pyo
+*.pyd
+*.log
+.DS_Store
+.env
+

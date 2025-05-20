@@ -1,0 +1,107 @@
+<!-- app/templates/upload.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>APK Static Analyzer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f9fc;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        h2, h3 {
+            text-align: center;
+        }
+        .success {
+            color: green;
+            text-align: center;
+            font-weight: bold;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 5px;
+        }
+        .center {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>APK Static Analyzer</h2>
+    <p class="center">Upload your Android APK file to perform a static security and privacy analysis.</p>
+
+    <form action="/" method="post" enctype="multipart/form-data" class="center">
+        <input type="file" name="apk" required>
+        <br><br>
+        <button type="submit">Analyze APK</button>
+    </form>
+
+    {% if message %}
+        <p class="success">{{ message }}</p>
+    {% endif %}
+
+    {% if sha256 %}
+        <p><strong>SHA-256:</strong> {{ sha256 }}</p>
+        <p><strong>VirusTotal Result:</strong> {{ vt_result }}</p>
+        <hr>
+        <h3>Static Analysis Result</h3>
+        <ul>
+            <li><strong>Debuggable:</strong> {{ analysis.debuggable }}</li>
+            <li><strong>Uses HTTP:</strong> {{ analysis.uses_http }}</li>
+            <li><strong>Permissions:</strong>
+                <ul>
+                    {% for perm in analysis.permissions %}<li>{{ perm }}</li>{% endfor %}
+                    {% if analysis.permissions|length == 0 %}<li>None</li>{% endif %}
+                </ul>
+            </li>
+            <li><strong>Hardcoded Secrets:</strong>
+                <ul>
+                    {% for secret in analysis.hardcoded_secrets %}<li>{{ secret }}</li>{% endfor %}
+                    {% if analysis.hardcoded_secrets|length == 0 %}<li>None</li>{% endif %}
+                </ul>
+            </li>
+            <li><strong>Detected SDKs:</strong>
+                <ul>
+                    {% for sdk in analysis.detected_sdks %}<li>{{ sdk }}</li>{% endfor %}
+                    {% if analysis.detected_sdks|length == 0 %}<li>None</li>{% endif %}
+                </ul>
+            </li>
+            <li><strong>Insecure WebView Usage:</strong>
+                <ul>
+                    {% for webview in analysis.insecure_webview_usage %}<li>{{ webview }}</li>{% endfor %}
+                    {% if analysis.insecure_webview_usage|length == 0 %}<li>None</li>{% endif %}
+                </ul>
+            </li>
+            <li><strong>Exported Components:</strong>
+                <ul>
+                    {% for comp in analysis.exported_components %}<li>{{ comp }}</li>{% endfor %}
+                    {% if analysis.exported_components|length == 0 %}<li>None</li>{% endif %}
+                </ul>
+            </li>
+            <li><strong>Base64-Encoded Strings:</strong>
+                <ul>
+                    {% for b64 in analysis.base64_strings %}<li>{{ b64 }}</li>{% endfor %}
+                    {% if analysis.base64_strings|length == 0 %}<li>None</li>{% endif %}
+                </ul>
+            </li>
+        </ul>
+        <div class="center">
+            <a href="{{ report_link }}" target="_blank">📄 Download Full PDF Report</a>
+        </div>
+    {% endif %}
+</div>
+</body>
+</html>
