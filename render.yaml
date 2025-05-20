@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: apk-static-analyzer
+    env: python
+    buildCommand: ""
+    startCommand: flask run --host=0.0.0.0 --port=10000
+    envVars:
+      - key: FLASK_APP
+        value: run.py
+      - key: FLASK_ENV
+        value: production
